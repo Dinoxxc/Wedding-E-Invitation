@@ -14,6 +14,14 @@ function initEnvelope() {
   
   console.log('✅ Envelope initialized');
   
+  // Check if envelope was already opened
+  const envelopeOpened = localStorage.getItem('envelopeOpened');
+  if (envelopeOpened === 'true') {
+    console.log('🔓 Envelope already opened - skipping animation');
+    overlay.remove();
+    return;
+  }
+  
   // One-time click handler
   container.addEventListener('click', function() {
     console.log('🎯 Envelope clicked!');
@@ -24,6 +32,9 @@ function initEnvelope() {
     // Add opening class for animation
     overlay.classList.add('opening');
     console.log('📤 Opening animation started');
+    
+    // Mark envelope as opened
+    localStorage.setItem('envelopeOpened', 'true');
     
     // Start music if available
     const bgMusic = document.getElementById('background-music');
