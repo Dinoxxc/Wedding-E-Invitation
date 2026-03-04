@@ -1623,8 +1623,22 @@ body {
   top: 0 !important;
 }
 
-.skiptranslate {
+/* Hide the Google Translate toolbar but NOT the widget itself */
+.skiptranslate iframe {
   display: none !important;
+}
+
+/* Hide only the top banner, but keep the select dropdown */
+#google_translate_element .skiptranslate {
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+}
+
+/* But show the select dropdown */
+#google_translate_element .goog-te-combo {
+  visibility: visible !important;
+  display: block !important;
 }
 
 /* ==========================================
