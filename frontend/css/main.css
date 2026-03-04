@@ -1514,6 +1514,120 @@ body.with-sidebar .dark-mode-toggle {
 }
 
 /* ==========================================
+   TRANSLATE BUTTON
+   ========================================== */
+.translate-toggle {
+  position: fixed;
+  top: var(--space-lg);
+  right: calc(var(--space-lg) + 70px);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--color-light);
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 998;
+  transition: all 0.3s ease;
+  color: var(--color-primary);
+}
+
+.translate-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+.translate-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+  background: var(--color-primary);
+  color: var(--color-light);
+  border-color: var(--color-primary);
+}
+
+body.with-sidebar .translate-toggle {
+  right: calc(80px + var(--space-lg) + 70px);
+}
+
+/* Language Dropdown */
+.language-dropdown {
+  position: fixed;
+  top: calc(var(--space-lg) + 60px);
+  right: calc(var(--space-lg) + 70px);
+  background: var(--color-light);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 999;
+  overflow: hidden;
+  min-width: 150px;
+  animation: dropdownSlide 0.3s ease;
+}
+
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body.with-sidebar .language-dropdown {
+  right: calc(80px + var(--space-lg) + 70px);
+}
+
+.lang-option {
+  display: block;
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-family: var(--font-secondary);
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.lang-option:last-child {
+  border-bottom: none;
+}
+
+.lang-option:hover {
+  background: var(--color-primary);
+  color: var(--color-light);
+}
+
+.lang-option.active {
+  background: var(--color-primary);
+  color: var(--color-light);
+  font-weight: 500;
+}
+
+/* Hide Google Translate default widget */
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+.skiptranslate {
+  display: none !important;
+}
+
+/* ==========================================
    RESPONSIVE
    ========================================== */
 @media (max-width: 768px) {
@@ -1582,6 +1696,24 @@ body.with-sidebar .dark-mode-toggle {
   
   body.with-sidebar .dark-mode-toggle {
     right: var(--space-md);
+  }
+  
+  .translate-toggle {
+    top: var(--space-md);
+    right: calc(var(--space-md) + 60px);
+  }
+  
+  body.with-sidebar .translate-toggle {
+    right: calc(var(--space-md) + 60px);
+  }
+  
+  .language-dropdown {
+    top: calc(var(--space-md) + 60px);
+    right: calc(var(--space-md) + 60px);
+  }
+  
+  body.with-sidebar .language-dropdown {
+    right: calc(var(--space-md) + 60px);
   }
 }
 

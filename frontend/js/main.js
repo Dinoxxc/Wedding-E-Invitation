@@ -474,3 +474,95 @@ const lightboxStyles = `
 const styleSheet = document.createElement('style');
 styleSheet.textContent = lightboxStyles;
 document.head.appendChild(styleSheet);
+
+// ==========================================
+// TRANSLATION FUNCTIONALITY
+// ==========================================
+function initTranslation() {
+  const translateBtn = document.getElementById('translate-toggle');
+  const dropdown = document.getElementById('language-dropdown');
+  const langOptions = document.querySelectorAll('.lang-option');
+  
+  if (!translateBtn || !dropdown) return;
+  
+  // Toggle dropdown
+  translateBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const isVisible = dropdown.style.display === 'block';
+    dropdown.style.display = isVisible ? 'none' : 'block';
+  });
+  
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!dropdown.contains(e.target) && e.target !== translateBtn) {
+      dropdown.style.display = 'none';
+    }
+  });
+  
+  // Handle language selection
+  langOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      const lang = this.getAttribute('data-lang');
+      translatePage(lang);
+      
+      // Update active state
+      langOptions.forEach(opt => opt.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Close dropdown
+      dropdown.style.display = 'none';
+      
+      // Save preference
+      localStorage.setItem('preferredLanguage', lang);
+    });
+  });
+  
+  // Restore previous language preference
+  const savedLang = localStorage.getItem('preferredLanguage');
+  if (savedLang && savedLang !== 'en') {
+    setTimeout(() => translatePage(savedLang), 1000);
+    langOptions.forEach(opt => {
+      if (opt.getAttribute('data-lang') === savedLang) {
+        opt.classList.add('active');
+      }
+    });
+  } else {
+    // Set English as active by default
+    langOptions.forEach(opt => {
+      if (opt.getAttribute('data-lang') === 'en') {
+        opt.classList.add('active');
+      }
+    });
+  }
+}
+
+function translatePage(targetLang) {
+  if (targetLang === 'en') {
+    // Reset to original language
+    const translateSelect = document.querySelector('.goog-te-combo');
+    if (translateSelect) {
+      translateSelect.value = '';
+      translateSelect.dispatchEvent(new Event('change'));
+    }
+    return;
+  }
+  
+  // Wait for Google Translate to load
+  const checkGoogleTranslate = setInterval(function() {
+    const translateSelect = document.querySelector('.goog-te-combo');
+    if (translateSelect) {
+      clearInterval(checkGoogleTranslate);
+      translateSelect.value = targetLang;
+      translateSelect.dispatchEvent(new Event('change'));
+    }
+  }, 100);
+  
+  // Stop checking after 5 seconds
+  setTimeout(() => clearInterval(checkGoogleTranslate), 5000);
+}
+
+// Initialize translation on page load
+document.addEventListener('DOMContentLoaded', function() {
+  // Wait a bit for Google Translate to initialize
+  setTimeout(initTranslation, 500);
+});
