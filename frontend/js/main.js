@@ -16,11 +16,17 @@ function initEnvelope() {
   
   // Check if envelope was already opened
   const envelopeOpened = localStorage.getItem('envelopeOpened');
+  console.log('📦 localStorage envelopeOpened value:', envelopeOpened);
+  console.log('📦 Type:', typeof envelopeOpened);
+  console.log('📦 Strict check (=== "true"):', envelopeOpened === 'true');
+  
   if (envelopeOpened === 'true') {
     console.log('🔓 Envelope already opened - skipping animation');
     overlay.remove();
     return;
   }
+  
+  console.log('🎭 Envelope will be displayed - waiting for click...');
   
   // One-time click handler
   container.addEventListener('click', function() {
@@ -35,6 +41,7 @@ function initEnvelope() {
     
     // Mark envelope as opened
     localStorage.setItem('envelopeOpened', 'true');
+    console.log('💾 Saved to localStorage: envelopeOpened = true');
     
     // Start music if available
     const bgMusic = document.getElementById('background-music');
@@ -542,7 +549,8 @@ function initTranslation() {
   const savedLang = localStorage.getItem('preferredLanguage');
   if (savedLang && savedLang !== 'en') {
     console.log('🔄 Restoring saved language:', savedLang);
-    setTimeout(() => translatePage(savedLang), 1500);
+    // Wait longer for Google Translate to be fully ready
+    setTimeout(() => translatePage(savedLang), 3000);
     langOptions.forEach(opt => {
       if (opt.getAttribute('data-lang') === savedLang) {
         opt.classList.add('active');
@@ -579,7 +587,7 @@ function translatePage(targetLang) {
   
   // Wait for Google Translate to load
   let attempts = 0;
-  const maxAttempts = 50; // 5 seconds total (50 * 100ms)
+  const maxAttempts = 100; // 10 seconds total (100 * 100ms)
   
   const checkGoogleTranslate = setInterval(function() {
     attempts++;
@@ -594,8 +602,23 @@ function translatePage(targetLang) {
       console.log('✅ Translation triggered');
     } else if (attempts >= maxAttempts) {
       clearInterval(checkGoogleTranslate);
-      console.error('❌ Google Translate widget not found after 5 seconds');
-      console.error('⚠️ Please check if Google Translate API loaded correctly');
+      console.error('❌ Google Translate widget not found after 10 seconds');
+      console.error('⚠️ Google Translate element:', document.getElementById('google_translate_element'));
+      console.error('⚠️ Try checking if Google Translate script loaded');
+      
+      // Try to reinitialize
+      console.log('🔄 Attempting to reinitialize Google Translate...');
+      if (typeof google !== 'undefined' && google.translate) {
+        try {
+          googleTranslateElementInit();
+          console.log('✅ Reinitialize triggered, please try again in a moment');
+        } catch (e) {
+          console.error('❌ Reinitialize failed:', e);
+        }
+      }
+    } else if (attempts % 10 === 0) {
+      // Log every second
+      console.log(`⏳ Waiting for Google Translate widget... (${attempts * 100}ms)`);
     }
   }, 100);
 }
