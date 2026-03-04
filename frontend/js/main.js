@@ -8,14 +8,17 @@ function initEnvelope() {
   const container = document.querySelector('.envelope-container');
   
   if (!overlay || !container) {
+    alert('ERROR: Envelope elements not found!');
     console.log('Envelope elements not found');
     return;
   }
   
+  alert('Envelope ready! Click to test.');
   console.log('✅ Envelope initialized successfully');
   
   // One-time click handler
   container.addEventListener('click', function handleClick() {
+    alert('Clicked! Watch animation...');
     console.log('🎯 Envelope clicked!');
     
     // Disable further clicks
@@ -42,6 +45,7 @@ function initEnvelope() {
       setTimeout(function() {
         console.log('🗑️ Removing envelope...');
         overlay.style.display = 'none';
+        alert('Done! Home should be visible now.');
         console.log('✅ Home page revealed!');
       }, 700);
     }, 1600);
