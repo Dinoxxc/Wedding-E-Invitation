@@ -1623,19 +1623,27 @@ body {
   top: 0 !important;
 }
 
-/* Hide the Google Translate toolbar but NOT the widget itself */
-.skiptranslate iframe {
+/* Position Google Translate container off-screen but allow rendering */
+#google_translate_element {
+  position: fixed;
+  bottom: -100px;
+  left: 0;
+  z-index: -1;
+  visibility: visible !important;
+  opacity: 0.01; /* Almost invisible but still rendered */
+}
+
+/* Hide the toolbar div but keep select visible */
+#google_translate_element .skiptranslate > div:first-child {
+  display: none;
+}
+
+/* Hide iframe inside skiptranslate */
+#google_translate_element .skiptranslate iframe {
   display: none !important;
 }
 
-/* Hide only the top banner, but keep the select dropdown */
-#google_translate_element .skiptranslate {
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-}
-
-/* But show the select dropdown */
+/* Keep the combo select accessible to JavaScript */
 #google_translate_element .goog-te-combo {
   visibility: visible !important;
   display: block !important;
