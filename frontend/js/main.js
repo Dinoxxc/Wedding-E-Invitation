@@ -490,17 +490,25 @@ document.head.appendChild(styleSheet);
 // TRANSLATION FUNCTIONALITY
 // ==========================================
 function initTranslation() {
+  console.log('🔧 Initializing translation functionality...');
+  
   const translateBtn = document.getElementById('translate-toggle');
   const dropdown = document.getElementById('language-dropdown');
   const langOptions = document.querySelectorAll('.lang-option');
   
-  if (!translateBtn || !dropdown) return;
+  if (!translateBtn || !dropdown) {
+    console.warn('⚠️ Translation elements not found on this page');
+    return;
+  }
+  
+  console.log('✅ Translation UI elements found');
   
   // Toggle dropdown
   translateBtn.addEventListener('click', function(e) {
     e.stopPropagation();
     const isVisible = dropdown.style.display === 'block';
     dropdown.style.display = isVisible ? 'none' : 'block';
+    console.log('🎯 Dropdown toggled:', !isVisible ? 'opened' : 'closed');
   });
   
   // Close dropdown when clicking outside
@@ -514,6 +522,7 @@ function initTranslation() {
   langOptions.forEach(option => {
     option.addEventListener('click', function() {
       const lang = this.getAttribute('data-lang');
+      console.log('🌍 Language selected:', lang);
       translatePage(lang);
       
       // Update active state
@@ -525,13 +534,15 @@ function initTranslation() {
       
       // Save preference
       localStorage.setItem('preferredLanguage', lang);
+      console.log('💾 Language preference saved');
     });
   });
   
   // Restore previous language preference
   const savedLang = localStorage.getItem('preferredLanguage');
   if (savedLang && savedLang !== 'en') {
-    setTimeout(() => translatePage(savedLang), 1000);
+    console.log('🔄 Restoring saved language:', savedLang);
+    setTimeout(() => translatePage(savedLang), 1500);
     langOptions.forEach(opt => {
       if (opt.getAttribute('data-lang') === savedLang) {
         opt.classList.add('active');
@@ -544,36 +555,54 @@ function initTranslation() {
         opt.classList.add('active');
       }
     });
+    console.log('✅ English set as default language');
   }
 }
 
 function translatePage(targetLang) {
+  console.log('🔄 Attempting to translate to:', targetLang);
+  
   if (targetLang === 'en') {
     // Reset to original language
     const translateSelect = document.querySelector('.goog-te-combo');
     if (translateSelect) {
+      console.log('↩️ Resetting to English');
       translateSelect.value = '';
       translateSelect.dispatchEvent(new Event('change'));
+    } else {
+      console.warn('⚠️ Google Translate select not found for reset');
+      // Force page reload to reset
+      location.reload();
     }
     return;
   }
   
   // Wait for Google Translate to load
+  let attempts = 0;
+  const maxAttempts = 50; // 5 seconds total (50 * 100ms)
+  
   const checkGoogleTranslate = setInterval(function() {
+    attempts++;
     const translateSelect = document.querySelector('.goog-te-combo');
+    
     if (translateSelect) {
       clearInterval(checkGoogleTranslate);
+      console.log('✅ Google Translate widget found after', attempts * 100, 'ms');
+      console.log('🌍 Changing language to:', targetLang);
       translateSelect.value = targetLang;
       translateSelect.dispatchEvent(new Event('change'));
+      console.log('✅ Translation triggered');
+    } else if (attempts >= maxAttempts) {
+      clearInterval(checkGoogleTranslate);
+      console.error('❌ Google Translate widget not found after 5 seconds');
+      console.error('⚠️ Please check if Google Translate API loaded correctly');
     }
   }, 100);
-  
-  // Stop checking after 5 seconds
-  setTimeout(() => clearInterval(checkGoogleTranslate), 5000);
 }
 
 // Initialize translation on page load
 document.addEventListener('DOMContentLoaded', function() {
-  // Wait a bit for Google Translate to initialize
-  setTimeout(initTranslation, 500);
+  console.log('📄 DOM loaded - initializing translation in 1 second...');
+  // Wait a bit longer for Google Translate to initialize
+  setTimeout(initTranslation, 1000);
 });
