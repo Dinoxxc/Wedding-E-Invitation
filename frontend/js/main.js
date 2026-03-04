@@ -13,6 +13,9 @@ function initEnvelope() {
   let musicStarted = false;
   
   container.addEventListener('click', function() {
+    // Prevent multiple clicks
+    container.style.pointerEvents = 'none';
+    
     // Add opening class to trigger animations
     overlay.classList.add('opening');
     
@@ -25,15 +28,18 @@ function initEnvelope() {
       }
     }
     
-    // Remove overlay after animation completes
+    // Wait for animations to complete:
+    // - Flap rotation: 1.6s
+    // - Card slide out: 1.8s + 0.4s delay = 2.2s
+    // Total: ~3s for full animation sequence
     setTimeout(() => {
       overlay.classList.add('opened');
       
-      // Remove from DOM after fade out
+      // Remove from DOM after fade out (0.8s)
       setTimeout(() => {
         overlay.remove();
       }, 800);
-    }, 1500);
+    }, 3000);
   });
 }
 
