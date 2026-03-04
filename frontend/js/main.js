@@ -12,49 +12,40 @@ function initEnvelope() {
     return;
   }
   
-  console.log('Envelope initialized');
+  console.log('✅ Envelope initialized successfully');
   
-  // Play background music when envelope is clicked (if available)
-  let musicStarted = false;
-  let clicked = false;
-  
-  container.addEventListener('click', function() {
-    if (clicked) return; // Prevent multiple clicks
-    clicked = true;
+  // One-time click handler
+  container.addEventListener('click', function handleClick() {
+    console.log('🎯 Envelope clicked!');
     
-    console.log('Envelope clicked!');
-    
-    // Prevent further clicks
+    // Disable further clicks
+    container.removeEventListener('click', handleClick);
     container.style.pointerEvents = 'none';
+    container.style.cursor = 'default';
     
-    // Add opening class to trigger animations
+    // Add opening class for animation
     overlay.classList.add('opening');
-    console.log('Opening class added');
+    console.log('📤 Opening animation started');
     
-    // Start background music if available
-    if (!musicStarted) {
-      const musicPlayer = document.getElementById('music-player');
-      if (musicPlayer) {
-        musicPlayer.play().catch(e => console.log('Music autoplay prevented:', e));
-        musicStarted = true;
-      }
+    // Start music if available
+    const musicPlayer = document.getElementById('music-player');
+    if (musicPlayer) {
+      musicPlayer.play().catch(e => console.log('🎵 Music autoplay prevented'));
     }
     
-    // Wait for animations to complete: 1.5s animation + 0.5s buffer = 2s
-    setTimeout(() => {
-      console.log('Starting fade out...');
+    // Wait for animation (1.5s) then fade out
+    setTimeout(function() {
+      console.log('🌫️ Starting fade out...');
       overlay.classList.add('opened');
       
-      // Remove from DOM after fade out (0.8s transition)
-      setTimeout(() => {
-        console.log('Removing envelope from DOM');
-        if (overlay && overlay.parentNode) {
-          overlay.parentNode.removeChild(overlay);
-        }
-        console.log('Home page should be visible now');
-      }, 1000); // Increased from 800ms to 1000ms for safety
-    }, 1800); // Reduced from 2000ms to 1800ms
-  });
+      // Wait for fade transition (0.6s) then remove
+      setTimeout(function() {
+        console.log('🗑️ Removing envelope...');
+        overlay.style.display = 'none';
+        console.log('✅ Home page revealed!');
+      }, 700);
+    }, 1600);
+  }, { once: true }); // Use once option for safety
 }
 
 // Custom Cursor

@@ -168,7 +168,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
 [data-theme="dark"] .envelope-overlay {
@@ -176,9 +178,9 @@ body {
 }
 
 .envelope-overlay.opened {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 /* Envelope Container */
