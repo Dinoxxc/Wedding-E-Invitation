@@ -167,5 +167,36 @@
 
   <!-- Scripts -->
   <script src="/js/main.js"></script>
+  
+  <!-- Inline envelope script for guaranteed execution -->
+  <script>
+    // Backup inline script
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🔥 INLINE SCRIPT RUNNING');
+      
+      const overlay = document.getElementById('envelope-overlay');
+      const container = document.querySelector('.envelope-container');
+      
+      if (!overlay || !container) {
+        console.error('❌ Envelope elements NOT FOUND');
+        return;
+      }
+      
+      console.log('✅ INLINE: Envelope found');
+      
+      container.onclick = function() {
+        console.log('✅ INLINE: Clicked!');
+        overlay.classList.add('opening');
+        
+        setTimeout(function() {
+          overlay.classList.add('opened');
+          setTimeout(function() {
+            overlay.style.display = 'none';
+            console.log('✅ INLINE: Envelope hidden');
+          }, 700);
+        }, 1600);
+      };
+    });
+  </script>
 </body>
 </html>
