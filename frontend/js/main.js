@@ -2,6 +2,53 @@
 // WEDDING E-INVITATION - MAIN JAVASCRIPT
 // ==========================================
 
+// Custom Cursor
+function initCustomCursor() {
+  const cursor = document.createElement('div');
+  cursor.className = 'custom-cursor';
+  document.body.appendChild(cursor);
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let cursorX = 0;
+  let cursorY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  function animateCursor() {
+    cursorX += (mouseX - cursorX) * 0.2;
+    cursorY += (mouseY - cursorY) * 0.2;
+    cursor.style.left = cursorX + 'px';
+    cursor.style.top = cursorY + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // Hover effect on interactive elements
+  const interactiveElements = document.querySelectorAll('a, button, .btn, .card, .gallery-item, input, textarea, select');
+  interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+}
+
+// Animated Background
+function initAnimatedBackground() {
+  const bgAnimation = document.createElement('div');
+  bgAnimation.className = 'bg-animation';
+  
+  for (let i = 0; i < 5; i++) {
+    const shape = document.createElement('div');
+    shape.className = 'floating-shape';
+    bgAnimation.appendChild(shape);
+  }
+  
+  document.body.prepend(bgAnimation);
+}
+
 // Dark Mode Toggle
 function initDarkMode() {
   const toggle = document.getElementById('dark-mode-toggle');
@@ -119,6 +166,33 @@ function initSmoothScroll() {
       }
     });
   });
+}
+
+// Scroll Reveal Animation
+function initScrollReveal() {
+  const revealElements = document.querySelectorAll('.card, .section-header, .gallery-item, .story-item, .event-item');
+  
+  const revealOnScroll = () => {
+    revealElements.forEach(element => {
+      const elementTop = element.getBoundingClientRect().top;
+      const elementVisible = 100;
+      
+      if (elementTop < window.innerHeight - elementVisible) {
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+      }
+    });
+  };
+  
+  // Initial setup
+  revealElements.forEach(element => {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(30px)';
+    element.style.transition = 'all 0.6s ease';
+  });
+  
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll(); // Run on load
 }
 
 // Form Validation
@@ -297,11 +371,14 @@ function formatDate(dateString) {
 
 // Initialize on DOM Load
 document.addEventListener('DOMContentLoaded', function() {
+  initCustomCursor();
+  initAnimatedBackground();
   initDarkMode();
   initCountdown();
   initMusicPlayer();
   setActiveNavLink();
   initSmoothScroll();
+  initScrollReveal();
   initFormValidation();
   initGallery();
   loadMessages();
