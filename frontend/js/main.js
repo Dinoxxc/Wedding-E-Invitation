@@ -8,48 +8,42 @@ function initEnvelope() {
   const container = document.querySelector('.envelope-container');
   
   if (!overlay || !container) {
-    alert('ERROR: Envelope elements not found!');
-    console.log('Envelope elements not found');
+    console.error('❌ Envelope elements not found!');
     return;
   }
   
-  alert('Envelope ready! Click to test.');
-  console.log('✅ Envelope initialized successfully');
+  console.log('✅ Envelope initialized');
   
   // One-time click handler
-  container.addEventListener('click', function handleClick() {
-    alert('Clicked! Watch animation...');
+  container.addEventListener('click', function() {
     console.log('🎯 Envelope clicked!');
     
     // Disable further clicks
-    container.removeEventListener('click', handleClick);
     container.style.pointerEvents = 'none';
-    container.style.cursor = 'default';
     
     // Add opening class for animation
     overlay.classList.add('opening');
     console.log('📤 Opening animation started');
     
     // Start music if available
-    const musicPlayer = document.getElementById('music-player');
-    if (musicPlayer) {
-      musicPlayer.play().catch(e => console.log('🎵 Music autoplay prevented'));
+    const bgMusic = document.getElementById('background-music');
+    if (bgMusic) {
+      bgMusic.play().catch(e => console.log('🎵 Music autoplay prevented'));
     }
     
-    // Wait for animation (1.5s) then fade out
+    // Wait for animation (1.6s) then fade out
     setTimeout(function() {
       console.log('🌫️ Starting fade out...');
       overlay.classList.add('opened');
       
-      // Wait for fade transition (0.6s) then remove
+      // Wait for fade transition (0.7s) then remove completely
       setTimeout(function() {
-        console.log('🗑️ Removing envelope...');
-        overlay.style.display = 'none';
-        alert('Done! Home should be visible now.');
-        console.log('✅ Home page revealed!');
+        console.log('🗑️ Removing envelope from DOM');
+        overlay.remove();
+        console.log('✅ Envelope removed - home page revealed!');
       }, 700);
     }, 1600);
-  }, { once: true }); // Use once option for safety
+  }, { once: true });
 }
 
 // Custom Cursor
