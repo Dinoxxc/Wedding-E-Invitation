@@ -1,20 +1,25 @@
 /* ==========================================
-   WEDDING E-INVITATION - CLEAN MINIMAL
+   WEDDING E-INVITATION - JAVANESE STYLE
    ========================================== */
 
 /* CSS Variables */
 :root {
-  /* Colors - Light Mode */
-  --color-primary: #000000;
-  --color-secondary: #333333;
-  --color-muted: #666666;
-  --color-light: #ffffff;
-  --color-bg: #fafafa;
-  --color-border: #e8e8e8;
+  /* Colors - Indonesian/Javanese Palette */
+  --color-primary: #8B4513;        /* Sogan Brown */
+  --color-secondary: #D4A574;      /* Gold */
+  --color-accent: #C41E3A;         /* Maroon/Merah Hati */
+  --color-muted: #6B5D4F;
+  --color-light: #FFF8F0;          /* Cream */
+  --color-bg: #FAF5EF;
+  --color-bg-lighter: #FFFAF5;
+  --color-border: #E8DCC8;
+  --color-text: #3E2723;
+  --color-batik: #5D4E37;
   
   /* Typography */
   --font-primary: 'Cormorant Garamond', serif;
   --font-secondary: 'Montserrat', sans-serif;
+  --font-heading: 'Italiana', serif;
   
   /* Spacing - Konsisten */
   --space-xs: 0.5rem;
@@ -33,28 +38,35 @@
   --radius-full: 999px;
   
   /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --shadow-sm: 0 2px 8px rgba(139, 69, 19, 0.1);
+  --shadow-md: 0 4px 16px rgba(139, 69, 19, 0.15);
+  --shadow-lg: 0 8px 32px rgba(139, 69, 19, 0.2);
   
   /* Container */
   --container-width: 1200px;
   --container-sm: 600px;
   --container-md: 800px;
+  
+  /* Transitions */
+  --transition: all 0.3s ease;
 }
 
 /* Dark Mode Variables */
 [data-theme="dark"] {
-  --color-primary: #ffffff;
-  --color-secondary: #e0e0e0;
-  --color-muted: #999999;
-  --color-light: #0a0a0a;
-  --color-bg: #1a1a1a;
-  --color-border: #2a2a2a;
+  --color-primary: #D4A574;
+  --color-secondary: #B8956A;
+  --color-accent: #E57373;
+  --color-muted: #A08B7A;
+  --color-light: #2C1810;
+  --color-bg: #1A0F08;
+  --color-bg-lighter: #241812;
+  --color-border: #3E2723;
+  --color-text: #F5E6D3;
+  --color-batik: #8B7355;
   
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.5);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
 }
 
 /* ==========================================
@@ -101,12 +113,36 @@ html {
 
 body {
   font-family: var(--font-secondary);
-  color: var(--color-primary);
-  background: var(--color-light);
+  color: var(--color-text);
+  background: var(--color-bg);
   line-height: 1.8;
   overflow-x: hidden;
   position: relative;
   cursor: none; /* Hide default cursor */
+}
+
+/* Batik Pattern Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  z-index: 0;
+  pointer-events: none;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 20px, var(--color-batik) 20px, var(--color-batik) 21px),
+    repeating-linear-gradient(-45deg, transparent, transparent 20px, var(--color-batik) 20px, var(--color-batik) 21px),
+    radial-gradient(circle at 20% 30%, var(--color-batik) 1px, transparent 1px),
+    radial-gradient(circle at 80% 70%, var(--color-batik) 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, var(--color-batik) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px, 100px 100px, 100px 100px, 100px 100px;
+}
+
+[data-theme="dark"] body::before {
+  opacity: 0.05;
 }
 
 /* Custom Cursor */
@@ -298,10 +334,16 @@ body {
 }
 
 .card-ornament {
-  font-size: 2rem;
   color: var(--color-primary);
   margin-bottom: 1.5rem;
-  opacity: 0.8;
+  opacity: 0.6;
+  display: flex;
+  justify-content: center;
+}
+
+.card-ornament svg {
+  width: 60px;
+  height: 60px;
 }
 
 .card-to {
@@ -453,8 +495,14 @@ body {
 }
 
 .tap-indicator {
-  font-size: 1.5rem;
   animation: bounce 2s infinite ease-in-out;
+  color: var(--color-primary);
+  opacity: 0.7;
+}
+
+.tap-indicator svg {
+  width: 24px;
+  height: 24px;
 }
 
 .envelope-overlay.opening .envelope-instruction {
@@ -783,10 +831,38 @@ section:nth-child(even) {
 }
 
 .hero-divider {
-  width: 100px;
-  height: 1px;
-  background: var(--color-border);
+  width: 120px;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-primary) 20%,
+    var(--color-secondary),
+    var(--color-primary) 80%,
+    transparent
+  );
   margin: var(--space-lg) auto;
+  position: relative;
+}
+
+.hero-divider::before,
+.hero-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary);
+  border-radius: 50%;
+}
+
+.hero-divider::before {
+  left: -15px;
+}
+
+.hero-divider::after {
+  right: -15px;
 }
 
 .hero-date {
@@ -1149,8 +1225,31 @@ section:nth-child(even) {
 }
 
 .event-icon {
-  font-size: 3rem;
   margin-bottom: var(--space-md);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  background: var(--color-bg-lighter);
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  transition: var(--transition);
+}
+
+.card:hover .event-icon {
+  background: var(--color-primary);
+  color: var(--color-light);
+  border-color: var(--color-primary);
+  transform: scale(1.1) rotate(5deg);
+}
+
+.event-icon svg {
+  width: 48px;
+  height: 48px;
 }
 
 .event-title {
@@ -1321,7 +1420,11 @@ section:nth-child(even) {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+}
+
+.music-icon svg {
+  width: 20px;
+  height: 20px;
 }
 
 /* ==========================================
@@ -1379,15 +1482,31 @@ section:nth-child(even) {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
   cursor: pointer;
   z-index: 998;
   transition: all 0.3s ease;
+  color: var(--color-primary);
+}
+
+.dark-mode-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+[data-theme="dark"] .dark-mode-toggle .moon-icon {
+  display: none;
+}
+
+[data-theme="dark"] .dark-mode-toggle .sun-icon {
+  display: block !important;
 }
 
 .dark-mode-toggle:hover {
   transform: scale(1.1) rotate(20deg);
   box-shadow: var(--shadow-lg);
+  background: var(--color-primary);
+  color: var(--color-light);
+  border-color: var(--color-primary);
 }
 
 body.with-sidebar .dark-mode-toggle {
