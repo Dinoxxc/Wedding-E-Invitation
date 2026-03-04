@@ -2,6 +2,41 @@
 // WEDDING E-INVITATION - MAIN JAVASCRIPT
 // ==========================================
 
+// Envelope Opening Animation
+function initEnvelope() {
+  const overlay = document.getElementById('envelope-overlay');
+  const container = document.querySelector('.envelope-container');
+  
+  if (!overlay || !container) return;
+  
+  // Play background music when envelope is clicked (if available)
+  let musicStarted = false;
+  
+  container.addEventListener('click', function() {
+    // Add opening class to trigger animations
+    overlay.classList.add('opening');
+    
+    // Start background music if available
+    if (!musicStarted) {
+      const musicPlayer = document.getElementById('music-player');
+      if (musicPlayer) {
+        musicPlayer.play().catch(e => console.log('Music autoplay prevented:', e));
+        musicStarted = true;
+      }
+    }
+    
+    // Remove overlay after animation completes
+    setTimeout(() => {
+      overlay.classList.add('opened');
+      
+      // Remove from DOM after fade out
+      setTimeout(() => {
+        overlay.remove();
+      }, 800);
+    }, 1500);
+  });
+}
+
 // Custom Cursor
 function initCustomCursor() {
   const cursor = document.createElement('div');
@@ -371,6 +406,7 @@ function formatDate(dateString) {
 
 // Initialize on DOM Load
 document.addEventListener('DOMContentLoaded', function() {
+  initEnvelope();
   initCustomCursor();
   initAnimatedBackground();
   initDarkMode();
