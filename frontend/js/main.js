@@ -14,14 +14,14 @@ function initEnvelope() {
   
   console.log('✅ Envelope initialized');
   
-  // Check if envelope was already opened
-  const envelopeOpened = localStorage.getItem('envelopeOpened');
-  console.log('📦 localStorage envelopeOpened value:', envelopeOpened);
+  // Check if envelope was already opened IN THIS SESSION
+  const envelopeOpened = sessionStorage.getItem('envelopeOpened');
+  console.log('📦 sessionStorage envelopeOpened value:', envelopeOpened);
   console.log('📦 Type:', typeof envelopeOpened);
   console.log('📦 Strict check (=== "true"):', envelopeOpened === 'true');
   
   if (envelopeOpened === 'true') {
-    console.log('🔓 Envelope already opened - skipping animation');
+    console.log('🔓 Envelope already opened in this session - skipping animation');
     overlay.remove();
     return;
   }
@@ -39,9 +39,9 @@ function initEnvelope() {
     overlay.classList.add('opening');
     console.log('📤 Opening animation started');
     
-    // Mark envelope as opened
-    localStorage.setItem('envelopeOpened', 'true');
-    console.log('💾 Saved to localStorage: envelopeOpened = true');
+    // Mark envelope as opened FOR THIS SESSION
+    sessionStorage.setItem('envelopeOpened', 'true');
+    console.log('💾 Saved to sessionStorage: envelopeOpened = true');
     
     // Start music if available
     const bgMusic = document.getElementById('background-music');
