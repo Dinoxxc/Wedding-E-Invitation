@@ -29,9 +29,10 @@ function initEnvelope() {
     }
     
     // Wait for animations to complete:
-    // - Flap rotation: 1.6s
-    // - Card slide out: 1.8s + 0.4s delay = 2.2s
-    // Total: ~3s for full animation sequence
+    // - Flap rotation: 1.2s
+    // - Card slide out: 0.2s delay + 1.2s = 1.4s
+    // Total animation: ~1.5s
+    // Wait 2s to ensure animation is visible
     setTimeout(() => {
       overlay.classList.add('opened');
       
@@ -39,7 +40,7 @@ function initEnvelope() {
       setTimeout(() => {
         overlay.remove();
       }, 800);
-    }, 3000);
+    }, 2000);
   });
 }
 
