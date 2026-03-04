@@ -124,6 +124,21 @@
           autoDisplay: false
         }, 'google_translate_element');
         console.log('✅ Google Translate initialized successfully');
+        
+        // Wait for widget to render
+        let checkCount = 0;
+        const checkWidget = setInterval(() => {
+          checkCount++;
+          const widget = document.querySelector('.goog-te-combo');
+          if (widget) {
+            clearInterval(checkWidget);
+            console.log('✅ Google Translate widget rendered after', checkCount * 200, 'ms');
+          } else if (checkCount > 25) { // 5 seconds
+            clearInterval(checkWidget);
+            console.warn('⚠️ Widget render timeout');
+          }
+        }, 200);
+        
       } catch (error) {
         console.error('❌ Google Translate initialization failed:', error);
       }
@@ -132,7 +147,7 @@
   <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   
   <!-- Hidden Google Translate Container -->
-  <div id="google_translate_element" style="display: none;"></div>
+  <div id="google_translate_element" style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;"></div>
 
 </body>
 </html>
