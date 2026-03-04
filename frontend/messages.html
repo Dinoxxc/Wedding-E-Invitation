@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages | Dika & Sasa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  
+  <!-- Dark Mode Toggle -->
+  <button id="dark-mode-toggle" class="dark-mode-toggle">🌙</button>
+  
+  <!-- Back Button -->
+  <a href="/" class="btn-back">←</a>
+
+  <section>
+    <div class="container container-md">
+      <div class="section-header">
+        <div class="section-subtitle">YOUR WISHES</div>
+        <h1 class="section-title">Guest Messages</h1>
+        <p class="section-description">
+          Leave your congratulations and well wishes for the happy couple
+        </p>
+      </div>
+
+      <!-- Message Form -->
+      <form class="form" action="/api/messages" method="POST" style="margin-bottom: var(--space-3xl);">
+        
+        <div class="form-group">
+          <label class="form-label" for="name">Your Name *</label>
+          <input type="text" id="name" name="name" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message">Your Message *</label>
+          <textarea id="message" name="message" class="form-textarea" placeholder="Write your congratulations and wishes..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary form-submit">Send Message</button>
+
+      </form>
+
+      <!-- Messages List -->
+      <div class="section-header" style="margin-top: var(--space-3xl);">
+        <h2 class="section-title">All Messages</h2>
+      </div>
+      
+      <div class="messages-list">
+        <!-- Messages will be loaded here by JavaScript -->
+      </div>
+
+    </div>
+  </section>
+
+  <script src="/js/main.js"></script>
+
+</body>
+</html>

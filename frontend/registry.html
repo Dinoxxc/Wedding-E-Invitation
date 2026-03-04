@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gift Registry | Dika & Sasa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  
+  <!-- Dark Mode Toggle -->
+  <button id="dark-mode-toggle" class="dark-mode-toggle">🌙</button>
+  
+  <!-- Back Button -->
+  <a href="/" class="btn-back">←</a>
+
+  <section>
+    <div class="container container-md">
+      <div class="section-header">
+        <div class="section-subtitle">GIFT REGISTRY</div>
+        <h1 class="section-title">Wedding Gift</h1>
+        <p class="section-description">
+          Your presence is the greatest gift, but if you wish to honor us with a gift, we would be grateful
+        </p>
+      </div>
+
+      <div class="grid grid-2">
+        
+        <!-- Bank Account 1 -->
+        <div class="card">
+          <h3 class="card-title">Bank Transfer</h3>
+          <div style="margin: var(--space-lg) 0;">
+            <p style="color: var(--color-muted); font-size: 0.9rem; margin-bottom: var(--space-xs);">Bank Name</p>
+            <p style="font-size: 1.1rem; font-weight: 500; margin-bottom: var(--space-md);">Bank BCA</p>
+            
+            <p style="color: var(--color-muted); font-size: 0.9rem; margin-bottom: var(--space-xs);">Account Number</p>
+            <p style="font-size: 1.3rem; font-weight: 500; font-family: monospace; margin-bottom: var(--space-md);">1234567890</p>
+            
+            <p style="color: var(--color-muted); font-size: 0.9rem; margin-bottom: var(--space-xs);">Account Name</p>
+            <p style="font-size: 1.1rem; font-weight: 500;">Andika Noor Ismawan</p>
+          </div>
+          <button class="btn btn-outline" onclick="copyToClipboard('1234567890')">Copy Account Number</button>
+        </div>
+
+        <!-- Bank Account 2 -->
+        <div class="card">
+          <h3 class="card-title">Bank Transfer</h3>
+          <div style="margin: var(--space-lg) 0;">
+            <p style="color: var(--color-muted); font-size: 0.9rem; margin-bottom: var(--space-xs);">Bank Name</p>
+            <p style="font-size: 1.1rem; font-weight: 500; margin-bottom: var(--space-md);">Bank Mandiri</p>
+            
+            <p style="color: var(--color-muted); font-size: 0.9rem; margin-bottom: var(--space-xs);">Account Number</p>
+            <p style="font-size: 1.3rem; font-weight: 500; font-family: monospace; margin-bottom: var(--space-md);">0987654321</p>
+            
+            <p style="color: var(--color-muted); font-size: 0.9rem; margin-bottom: var(--space-xs);">Account Name</p>
+            <p style="font-size: 1.1rem; font-weight: 500;">Nadia Salsabila Melyani</p>
+          </div>
+          <button class="btn btn-outline" onclick="copyToClipboard('0987654321')">Copy Account Number</button>
+        </div>
+
+      </div>
+
+      <div class="card" style="margin-top: var(--space-xl); text-align: center;">
+        <h3 class="card-title">Mailing Address</h3>
+        <p class="card-text">
+          For those who prefer to send a gift in person:<br><br>
+          <strong>123 Wedding Street<br>
+          City, Province 12345<br>
+          Indonesia</strong>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(function() {
+        showNotification('Account number copied!', 'success');
+      }, function() {
+        showNotification('Failed to copy', 'error');
+      });
+    }
+
+    function showNotification(message, type) {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.classList.add('show');
+      }, 100);
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+          notification.remove();
+        }, 300);
+      }, 2000);
+    }
+  </script>
+  <script src="/js/main.js"></script>
+
+</body>
+</html>

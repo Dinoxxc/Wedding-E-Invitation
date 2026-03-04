@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Join us in celebrating our wedding day">
+  <title>Wedding Invitation | Dika & Sasa</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="with-sidebar">
+  
+  <!-- Dark Mode Toggle -->
+  <button id="dark-mode-toggle" class="dark-mode-toggle">🌙</button>
+  
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">D & S</div>
+    <ul class="sidebar-nav">
+      <li><a href="/" class="nav-link active">Home</a></li>
+      <li><a href="/story" class="nav-link">Story</a></li>
+      <li><a href="/gallery" class="nav-link">Gallery</a></li>
+      <li><a href="/details" class="nav-link">Details</a></li>
+      <li><a href="/rsvp" class="nav-link">RSVP</a></li>
+      <li><a href="/messages" class="nav-link">Messages</a></li>
+      <li><a href="/registry" class="nav-link">Registry</a></li>
+    </ul>
+  </aside>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-subtitle">THE WEDDING OF</div>
+      <h1 class="hero-title">Dika & Sasa</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-date">31 • December • 2026 | 18:00</p>
+      
+      <!-- Countdown Timer -->
+      <div id="countdown" class="countdown"></div>
+      
+      <div style="margin-top: var(--space-xl);">
+        <a href="/rsvp" class="btn btn-primary">Reserve Your Seat</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Info Section -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <div class="section-subtitle">JOIN US</div>
+        <h2 class="section-title">You Are Invited</h2>
+        <p class="section-description">
+          We joyfully request the pleasure of your company as we exchange vows and celebrate our love. 
+          Your presence will make our special day complete.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="event-icon">💒</div>
+          <h3 class="card-title">Ceremony</h3>
+          <p class="card-text">6:00 PM</p>
+          <p class="card-text">Grand Ballroom<br>The Elegant Hotel</p>
+        </div>
+        
+        <div class="card">
+          <div class="event-icon">🎉</div>
+          <h3 class="card-title">Reception</h3>
+          <p class="card-text">7:30 PM</p>
+          <p class="card-text">Garden Terrace<br>The Elegant Hotel</p>
+        </div>
+        
+        <div class="card">
+          <div class="event-icon">👔</div>
+          <h3 class="card-title">Dress Code</h3>
+          <p class="card-text">Formal Attire</p>
+          <p class="card-text">Black Tie Optional</p>
+        </div>
+      </div>
+
+      <div style="margin-top: var(--space-2xl);">
+        <a href="/details" class="btn btn-outline">View Full Details</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Will You Join Us?</h2>
+        <p class="section-description">
+          Please let us know if you can celebrate with us. Your timely response helps us prepare for the perfect day.
+        </p>
+        <div style="margin-top: var(--space-2xl); display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+          <a href="/rsvp" class="btn btn-primary">RSVP Now</a>
+          <a href="/messages" class="btn btn-outline">Leave a Message</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Background Music Player -->
+  <div id="music-player" class="music-player">
+    <div class="music-icon">🎵</div>
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="background-music" loop>
+    <source src="/audio/wedding-music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Scripts -->
+  <script src="/js/main.js"></script>
+</body>
+</html>
