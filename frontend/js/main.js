@@ -7,17 +7,29 @@ function initEnvelope() {
   const overlay = document.getElementById('envelope-overlay');
   const container = document.querySelector('.envelope-container');
   
-  if (!overlay || !container) return;
+  if (!overlay || !container) {
+    console.log('Envelope elements not found');
+    return;
+  }
+  
+  console.log('Envelope initialized');
   
   // Play background music when envelope is clicked (if available)
   let musicStarted = false;
+  let clicked = false;
   
   container.addEventListener('click', function() {
-    // Prevent multiple clicks
+    if (clicked) return; // Prevent multiple clicks
+    clicked = true;
+    
+    console.log('Envelope clicked!');
+    
+    // Prevent further clicks
     container.style.pointerEvents = 'none';
     
     // Add opening class to trigger animations
     overlay.classList.add('opening');
+    console.log('Opening class added');
     
     // Start background music if available
     if (!musicStarted) {
@@ -28,19 +40,20 @@ function initEnvelope() {
       }
     }
     
-    // Wait for animations to complete:
-    // - Flap rotation: 1.2s
-    // - Card slide out: 0.2s delay + 1.2s = 1.4s
-    // Total animation: ~1.5s
-    // Wait 2s to ensure animation is visible
+    // Wait for animations to complete: 1.5s animation + 0.5s buffer = 2s
     setTimeout(() => {
+      console.log('Starting fade out...');
       overlay.classList.add('opened');
       
-      // Remove from DOM after fade out (0.8s)
+      // Remove from DOM after fade out (0.8s transition)
       setTimeout(() => {
-        overlay.remove();
-      }, 800);
-    }, 2000);
+        console.log('Removing envelope from DOM');
+        if (overlay && overlay.parentNode) {
+          overlay.parentNode.removeChild(overlay);
+        }
+        console.log('Home page should be visible now');
+      }, 1000); // Increased from 800ms to 1000ms for safety
+    }, 1800); // Reduced from 2000ms to 1800ms
   });
 }
 
