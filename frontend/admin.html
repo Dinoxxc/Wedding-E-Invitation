@@ -137,6 +137,84 @@
       background: var(--color-light);
       border: 1px solid var(--color-border);
     }
+    .admin-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--color-border);
+      overflow-x: auto;
+    }
+    .admin-tab {
+      padding: 1rem 1.5rem;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-muted);
+      transition: var(--transition);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      white-space: nowrap;
+    }
+    .admin-tab:hover {
+      color: var(--color-primary);
+    }
+    .admin-tab.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .btn-action {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+      background: var(--color-primary);
+      border: 1px solid var(--color-primary);
+      color: white;
+      cursor: pointer;
+      transition: var(--transition);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-right: 0.5rem;
+    }
+    .btn-action:hover {
+      background: transparent;
+      color: var(--color-primary);
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--color-muted);
+      color: var(--color-muted);
+    }
+    .btn-secondary:hover {
+      background: var(--color-muted);
+      color: white;
+    }
+    .form-inline {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    .form-inline .form-group {
+      flex: 1;
+      min-width: 200px;
+      margin-bottom: 0;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      margin-bottom: 1.5rem;
+    }
     @media (max-width: 768px) {
       .admin-table {
         font-size: 0.75rem;
@@ -148,26 +226,16 @@
       .stat-number {
         font-size: 2rem;
       }
+      .admin-tabs {
+        font-size: 0.75rem;
+      }
+      .admin-tab {
+        padding: 0.75rem 1rem;
+      }
     }
   </style>
 </head>
 <body class="with-sidebar">
-  
-  <!-- Floating Couple Photos -->
-  <div class="floating-photos-container">
-    <div class="floating-photo" style="top: 10%; left: 5%;">
-      <img src="/images/couple1.jpg" alt="Couple photo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Crect width=%22120%22 height=%22120%22 fill=%22%23e0e0e0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2214%22 fill=%22%23999%22%3ED%26S%3C/text%3E%3C/svg%3E'">
-    </div>
-    <div class="floating-photo" style="top: 30%; right: 8%;">
-      <img src="/images/couple2.jpg" alt="Couple photo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Crect width=%22120%22 height=%22120%22 fill=%22%23e0e0e0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2214%22 fill=%22%23999%22%3ED%26S%3C/text%3E%3C/svg%3E'">
-    </div>
-    <div class="floating-photo" style="bottom: 20%; left: 10%;">
-      <img src="/images/couple3.jpg" alt="Couple photo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Crect width=%22120%22 height=%22120%22 fill=%22%23e0e0e0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2214%22 fill=%22%23999%22%3ED%26S%3C/text%3E%3C/svg%3E'">
-    </div>
-    <div class="floating-photo" style="top: 50%; right: 15%;">
-      <img src="/images/couple4.jpg" alt="Couple photo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Crect width=%22120%22 height=%22120%22 fill=%22%23e0e0e0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2214%22 fill=%22%23999%22%3ED%26S%3C/text%3E%3C/svg%3E'">
-    </div>
-  </div>
   
   <!-- Dark Mode Toggle -->
   <button id="dark-mode-toggle" class="dark-mode-toggle" title="Toggle Dark Mode">
@@ -179,23 +247,6 @@
       <path d="M10 1V3M10 17V19M19 10H17M3 10H1M16.364 3.636L14.95 5.05M5.05 14.95L3.636 16.364M16.364 16.364L14.95 14.95M5.05 5.05L3.636 3.636" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
     </svg>
   </button>
-  
-  <!-- Translate Button -->
-  <button id="translate-toggle" class="translate-toggle" title="Translate">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 2C5.5 2 2 5.5 2 10C2 14.5 5.5 18 10 18C14.5 18 18 14.5 18 10C18 5.5 14.5 2 10 2Z" stroke="currentColor" stroke-width="1.5"/>
-      <path d="M2 10H18M10 2C12 4 13 7 13 10C13 13 12 16 10 18M10 2C8 4 7 7 7 10C7 13 8 16 10 18" stroke="currentColor" stroke-width="1.5"/>
-      <text x="10" y="13.5" text-anchor="middle" font-size="8" font-weight="bold" fill="currentColor">A</text>
-    </svg>
-  </button>
-  
-  <!-- Language Selector Dropdown -->
-  <div id="language-dropdown" class="language-dropdown" style="display: none;">
-    <button class="lang-option" data-lang="en">English</button>
-    <button class="lang-option" data-lang="id">Indonesian</button>
-    <button class="lang-option" data-lang="jv">Javanese</button>
-    <button class="lang-option" data-lang="su">Sundanese</button>
-  </div>
   
   <!-- Sidebar Navigation -->
   <aside class="sidebar">
@@ -265,7 +316,7 @@
         </div>
       </div>
 
-      <!-- Stats -->
+      <!-- Stats - Always Visible -->
       <div id="rsvp-stats" class="stat-grid">
         <div class="stat-card">
           <div class="stat-number">-</div>
@@ -273,19 +324,260 @@
         </div>
       </div>
 
-      <!-- RSVPs Section -->
-      <div class="admin-section">
-        <h2>RSVP Responses</h2>
-        <div id="rsvp-list">
-          <p style="text-align: center; color: var(--color-muted); padding: 2rem;">Loading RSVPs...</p>
+      <!-- Tab Navigation -->
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchTab('overview', event)">Overview</button>
+        <button class="admin-tab" onclick="switchTab('rsvps', event)">RSVPs</button>
+        <button class="admin-tab" onclick="switchTab('messages', event)">Messages</button>
+        <button class="admin-tab" onclick="switchTab('guestlist', event)">Guest List</button>
+        <button class="admin-tab" onclick="switchTab('photos', event)">Photos</button>
+        <button class="admin-tab" onclick="switchTab('gifts', event)">Gifts</button>
+        <button class="admin-tab" onclick="switchTab('seating', event)">Seating</button>
+        <button class="admin-tab" onclick="switchTab('notifications', event)">Notifications</button>
+        <button class="admin-tab" onclick="switchTab('analytics', event)">Analytics</button>
+      </div>
+
+      <!-- Overview Tab -->
+      <div id="tab-overview" class="tab-content active">
+        <div class="admin-section">
+          <h2>Welcome to Admin Dashboard</h2>
+          <p style="color: var(--color-muted);">Use the tabs above to manage different aspects of your wedding invitation.</p>
         </div>
       </div>
 
-      <!-- Messages Section -->
-      <div class="admin-section">
-        <h2>Guest Messages</h2>
-        <div id="messages-admin-list">
-          <p style="text-align: center; color: var(--color-muted); padding: 2rem;">Loading messages...</p>
+      <!-- RSVPs Tab -->
+      <div id="tab-rsvps" class="tab-content">
+        <div class="admin-section">
+          <h2>RSVP Responses</h2>
+          <div id="rsvp-list">
+            <p style="text-align: center; color: var(--color-muted); padding: 2rem;">Loading RSVPs...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messages Tab -->
+      <div id="tab-messages" class="tab-content">
+        <div class="admin-section">
+          <h2>Guest Messages</h2>
+          <div id="messages-admin-list">
+            <p style="text-align: center; color: var(--color-muted); padding: 2rem;">Loading messages...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guest List Tab -->
+      <div id="tab-guestlist" class="tab-content">
+        <div class="admin-section">
+          <h2>Guest List Management</h2>
+          <div class="action-buttons">
+            <button class="btn-action" onclick="showAddGuestForm()">+ Add Guest</button>
+            <button class="btn-action btn-secondary" onclick="showImportGuestForm()">Import CSV</button>
+          </div>
+          <div id="add-guest-form" style="display: none; margin-bottom: 2rem; padding: 1.5rem; background: var(--color-bg-lighter); border: 1px solid var(--color-border);">
+            <h3 style="margin-bottom: 1rem;">Add New Guest</h3>
+            <form id="guest-form">
+              <div class="form-inline">
+                <div class="form-group">
+                  <label class="form-label">Guest Name *</label>
+                  <input type="text" name="name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Email</label>
+                  <input type="email" name="email" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Phone</label>
+                  <input type="text" name="phone" class="form-input">
+                </div>
+              </div>
+              <div class="form-inline">
+                <div class="form-group">
+                  <label class="form-label">Invitation Type</label>
+                  <select name="invitation_type" class="form-input">
+                    <option value="Regular">Regular</option>
+                    <option value="VIP">VIP</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Max Guests</label>
+                  <input type="number" name="max_guests" class="form-input" value="1" min="1">
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn-action" style="width: 100%;">Add Guest</button>
+                  <button type="button" class="btn-action btn-secondary" style="width: 100%; margin-top: 0.5rem;" onclick="hideAddGuestForm()">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div id="guestlist-list">
+            <p style="text-align: center; color: var(--color-muted); padding: 2rem;">Loading guest list...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photos Tab -->
+      <div id="tab-photos" class="tab-content">
+        <div class="admin-section">
+          <h2>Photo Gallery Management</h2>
+          <div id="photos-list">
+            <p style="text-align: center; color: var(--color-muted); padding: 2rem;">Loading photos...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gifts Tab -->
+      <div id="tab-gifts" class="tab-content">
+        <div class="admin-section">
+          <h2>Gift Tracking</h2>
+          <div class="action-buttons">
+            <button class="btn-action" onclick="showAddGiftForm()">+ Add Gift</button>
+          </div>
+          <div id="add-gift-form" style="display: none; margin-bottom: 2rem; padding: 1.5rem; background: var(--color-bg-lighter); border: 1px solid var(--color-border);">
+            <h3 style="margin-bottom: 1rem;">Record New Gift</h3>
+            <form id="gift-form">
+              <div class="form-inline">
+                <div class="form-group">
+                  <label class="form-label">Guest Name *</label>
+                  <input type="text" name="guest_name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Gift Type *</label>
+                  <select name="gift_type" class="form-input" required>
+                    <option value="cash">Cash</option>
+                    <option value="physical">Physical Gift</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Amount</label>
+                  <input type="number" name="amount" class="form-input" min="0">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-input" rows="2"></textarea>
+              </div>
+              <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <button type="submit" class="btn-action">Save Gift</button>
+                <button type="button" class="btn-action btn-secondary" onclick="hideAddGiftForm()">Cancel</button>
+              </div>
+            </form>
+          </div>
+          <div id="gift-stats" class="stat-grid" style="margin-bottom: 2rem;">
+            <div class="stat-card">
+              <div class="stat-number">-</div>
+              <div class="stat-label">Total Gifts</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">-</div>
+              <div class="stat-label">Total Cash</div>
+            </div>
+          </div>
+          <div id="gifts-list">
+            <p style="text-align: center; color: var(--color-muted); padding: 2rem;">Loading gifts...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seating Tab -->
+      <div id="tab-seating" class="tab-content">
+        <div class="admin-section">
+          <h2>Seating Arrangement</h2>
+          <div class="action-buttons">
+            <button class="btn-action" onclick="showAddTableForm()">+ Add Table</button>
+          </div>
+          <div id="add-table-form" style="display: none; margin-bottom: 2rem; padding: 1.5rem; background: var(--color-bg-lighter); border: 1px solid var(--color-border);">
+            <h3 style="margin-bottom: 1rem;">Add New Table</h3>
+            <form id="table-form">
+              <div class="form-inline">
+                <div class="form-group">
+                  <label class="form-label">Table Number *</label>
+                  <input type="number" name="table_number" class="form-input" required min="1">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Table Name</label>
+                  <input type="text" name="table_name" class="form-input" placeholder="e.g., VIP Garden">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Capacity *</label>
+                  <input type="number" name="capacity" class="form-input" required min="1" value="8">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Notes</label>
+                <input type="text" name="notes" class="form-input" placeholder="e.g., Near stage, garden area">
+              </div>
+              <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                <button type="submit" class="btn-action">Add Table</button>
+                <button type="button" class="btn-action btn-secondary" onclick="hideAddTableForm()">Cancel</button>
+              </div>
+            </form>
+          </div>
+          <div id="seating-list">
+            <p style="text-align: center; color: var(--color-muted); padding: 2rem;">Loading seating arrangement...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications Tab -->
+      <div id="tab-notifications" class="tab-content">
+        <div class="admin-section">
+          <h2>Send Notifications</h2>
+          
+          <div style="margin-bottom: 3rem; padding: 1.5rem; background: var(--color-bg-lighter); border: 1px solid var(--color-border);">
+            <h3 style="margin-bottom: 1rem;">Send Email Notifications</h3>
+            <form id="email-notification-form">
+              <div class="form-group">
+                <label class="form-label">Notification Type *</label>
+                <select name="type" class="form-input" required>
+                  <option value="invitation">Invitation</option>
+                  <option value="reminder">Reminder</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Recipients *</label>
+                <select name="recipients" class="form-input" required>
+                  <option value="all">All Guests</option>
+                  <option value="attending">Only Attending</option>
+                  <option value="not_responded">Not Responded</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-action">Send Email</button>
+            </form>
+          </div>
+
+          <div style="padding: 1.5rem; background: var(--color-bg-lighter); border: 1px solid var(--color-border);">
+            <h3 style="margin-bottom: 1rem;">Send SMS Notifications</h3>
+            <form id="sms-notification-form">
+              <div class="form-group">
+                <label class="form-label">Message Type *</label>
+                <select name="type" class="form-input" required>
+                  <option value="reminder">Wedding Reminder</option>
+                  <option value="checkin">Check-in Confirmation</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Recipients *</label>
+                <select name="recipients" class="form-input" required>
+                  <option value="all">All Guests with Phone</option>
+                  <option value="attending">Only Attending</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-action">Send SMS</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics Tab -->
+      <div id="tab-analytics" class="tab-content">
+        <div class="admin-section">
+          <h2>Analytics & Statistics</h2>
+          <div class="action-buttons">
+            <button class="btn-action" onclick="exportAnalytics()">Export to CSV</button>
+          </div>
+          <div id="analytics-content">
+            <p style="text-align: center; color: var(--color-muted); padding: 2rem;">Loading analytics...</p>
+          </div>
         </div>
       </div>
 
@@ -294,43 +586,6 @@
 
   <script src="/js/main.js"></script>
   <script src="/js/admin.js"></script>
-  
-  <!-- Google Translate API -->
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      console.log('🌐 Google Translate initializing...');
-      try {
-        new google.translate.TranslateElement({
-          pageLanguage: 'en',
-          includedLanguages: 'en,id,jv,su',
-          layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-          autoDisplay: false
-        }, 'google_translate_element');
-        console.log('✅ Google Translate initialized successfully');
-        
-        // Wait for widget to render
-        let checkCount = 0;
-        const checkWidget = setInterval(() => {
-          checkCount++;
-          const widget = document.querySelector('.goog-te-combo');
-          if (widget) {
-            clearInterval(checkWidget);
-            console.log('✅ Google Translate widget rendered after', checkCount * 200, 'ms');
-          } else if (checkCount > 25) { // 5 seconds
-            clearInterval(checkWidget);
-            console.warn('⚠️ Widget render timeout');
-          }
-        }, 200);
-        
-      } catch (error) {
-        console.error('❌ Google Translate initialization failed:', error);
-      }
-    }
-  </script>
-  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  
-  <!-- Hidden Google Translate Container -->
-  <div id="google_translate_element"></div>
 
 </body>
 </html>

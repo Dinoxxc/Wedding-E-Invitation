@@ -2,6 +2,91 @@
 // WEDDING E-INVITATION - MAIN JAVASCRIPT
 // ==========================================
 
+// Global WeddingApp Object for Admin Panel and Shared Utilities
+window.WeddingApp = {
+  // API Request Helper
+  apiRequest: async function(endpoint, options = {}) {
+    const url = endpoint.startsWith('http') ? endpoint : `/api${endpoint}`;
+    
+    const defaultOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+      }
+    };
+    
+    const fetchOptions = { ...defaultOptions, ...options };
+    
+    try {
+      const response = await fetch(url, fetchOptions);
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || data.message || `HTTP ${response.status}`);
+      }
+      
+      return data;
+    } catch (error) {
+      console.error('API Request Error:', error);
+      throw error;
+    }
+  },
+  
+  // Set button loading state
+  setButtonLoading: function(button, isLoading) {
+    if (!button) return;
+    
+    if (isLoading) {
+      button.disabled = true;
+      button.dataset.originalText = button.innerHTML;
+      button.innerHTML = '<span style="display: inline-block; animation: spin 1s linear infinite;">⏳</span> Loading...';
+    } else {
+      button.disabled = false;
+      button.innerHTML = button.dataset.originalText || button.innerHTML;
+    }
+  },
+  
+  // Show notification (reuse existing function)
+  showNotification: function(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 100);
+    
+    setTimeout(() => {
+      notification.classList.remove('show');
+      setTimeout(() => {
+        notification.remove();
+      }, 300);
+    }, 3000);
+  },
+  
+  // Escape HTML for XSS protection
+  escapeHtml: function(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  },
+  
+  // Format date
+  formatDate: function(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+};
+
 // Envelope Opening Animation
 function initEnvelope() {
   const overlay = document.getElementById('envelope-overlay');

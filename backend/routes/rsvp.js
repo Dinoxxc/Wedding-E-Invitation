@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const RSVP = require('../models/rsvp');
 const { validateRSVP, sanitizeInput } = require('../middleware/validation');
+const emailService = require('../config/email');
+const logger = require('../config/logger');
 
 // Submit RSVP
 router.post('/', validateRSVP, async (req, res) => {
@@ -28,13 +30,26 @@ router.post('/', validateRSVP, async (req, res) => {
 
     const rsvpId = await RSVP.create(sanitizedData);
     
+    // Send confirmation email (non-blocking)
+    emailService.sendRSVPConfirmation(sanitizedData)
+      .then(result => {
+        if (result.success) {
+          logger.info(`RSVP confirmation email sent to ${sanitizedData.email}`);
+        } else {
+          logger.error(`Failed to send RSVP confirmation email to ${sanitizedData.email}`);
+        }
+      })
+      .catch(err => {
+        logger.error('Email sending error:', err);
+      });
+    
     res.status(201).json({
       success: true,
-      message: 'RSVP submitted successfully!',
+      message: 'RSVP submitted successfully! Check your email for confirmation.',
       data: { id: rsvpId }
     });
   } catch (error) {
-    console.error('RSVP submission error:', error);
+    logger.error('RSVP submission error:', error);
     res.status(500).json({
       success: false,
       message: 'Failed to submit RSVP. Please try again later.'
@@ -59,7 +74,7 @@ router.get('/check/:email', async (req, res) => {
       data: rsvp
     });
   } catch (error) {
-    console.error('RSVP check error:', error);
+    logger.error('RSVP check error:', error);
     res.status(500).json({
       success: false,
       message: 'Failed to check RSVP'

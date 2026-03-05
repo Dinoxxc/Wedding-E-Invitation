@@ -65,6 +65,76 @@ async function setupDatabase() {
     `);
     console.log('✓ Admin users table created');
 
+    // Create guest list table
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS guest_list (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255),
+        phone VARCHAR(50),
+        invitation_type ENUM('VIP', 'Regular') DEFAULT 'Regular',
+        max_guests INT DEFAULT 1,
+        qr_code VARCHAR(255),
+        unique_code VARCHAR(255) UNIQUE NOT NULL,
+        table_number INT,
+        checked_in BOOLEAN DEFAULT FALSE,
+        check_in_time DATETIME,
+        notes TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX idx_unique_code (unique_code),
+        INDEX idx_email (email),
+        INDEX idx_checked_in (checked_in)
+      )
+    `);
+    console.log('✓ Guest list table created');
+
+    // Create photos table
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS photos (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        filename VARCHAR(255) NOT NULL,
+        path VARCHAR(500) NOT NULL,
+        uploaded_by VARCHAR(255) DEFAULT 'Anonymous',
+        caption TEXT,
+        approved BOOLEAN DEFAULT TRUE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_approved (approved),
+        INDEX idx_created_at (created_at)
+      )
+    `);
+    console.log('✓ Photos table created');
+
+    // Create gifts table
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS gifts (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        guest_name VARCHAR(255) NOT NULL,
+        gift_type ENUM('cash', 'physical', 'other') DEFAULT 'physical',
+        amount DECIMAL(10, 2),
+        description TEXT,
+        received_date DATE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_gift_type (gift_type),
+        INDEX idx_received_date (received_date)
+      )
+    `);
+    console.log('✓ Gifts table created');
+
+    // Create seating tables table
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS seating_tables (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        table_number INT UNIQUE NOT NULL,
+        table_name VARCHAR(255),
+        capacity INT DEFAULT 10,
+        notes TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_table_number (table_number)
+      )
+    `);
+    console.log('✓ Seating tables table created');
+
     await connection.end();
     console.log('\n✓ Database setup completed successfully!');
     console.log('\nNext steps:');
